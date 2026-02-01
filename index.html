@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hearts-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .heart {
+            position: absolute;
+            color: #ff6b8b;
+            font-size: 24px;
+            opacity: 0;
+            animation: float 6s linear infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .header {
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #ff4d7e;
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            background: linear-gradient(45deg, #fff0f5, #fffaf0);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #ff6b8b;
+        }
+        
+        .message p {
+            font-size: 1.4rem;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 18px 40px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            min-width: 180px;
+        }
+        
+        .yes-btn {
+            background: linear-gradient(45deg, #ff6b8b, #ff8e53);
+            color: white;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .yes-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 20px rgba(255, 107, 139, 0.3);
+            background: linear-gradient(45deg, #ff4d7e, #ff7a45);
+        }
+        
+        .no-btn {
+            background: linear-gradient(45deg, #8a8a8a, #c0c0c0);
+            color: white;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        
+        .no-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .counter {
+            font-size: 1rem;
+            color: #888;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        .acceptance-message {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            border-radius: 20px;
+            animation: fadeIn 1s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .acceptance-message h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .acceptance-message p {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+        }
+        
+        .celebration {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .heart-icon {
+            color: #ff4d7e;
+            margin: 0 10px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .btn {
+                padding: 15px 30px;
+                font-size: 1.3rem;
+                min-width: 150px;
+            }
+            
+            .options {
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .message p {
+                font-size: 1.2rem;
+            }
+            
+            .options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hearts-bg" id="heartsContainer"></div>
+        
+        <div class="header">
+            <h1><i class="fas fa-heart heart-icon"></i> Will You Be My Valentine? <i class="fas fa-heart heart-icon"></i></h1>
+            <p class="subtitle">A special question for a special person</p>
+        </div>
+        
+        <div class="message">
+            <p>My dearest, from the moment we met, you've filled my life with joy and happiness. You are the most wonderful person I know, and I would be incredibly honored if you would be my Valentine this year and every year to come.</p>
+        </div>
+        
+        <div class="options">
+            <button class="btn yes-btn" id="yesBtn">
+                <i class="fas fa-heart"></i> Yes, Absolutely!
+            </button>
+            <button class="btn no-btn" id="noBtn">
+                <i class="fas fa-times"></i> No, Sorry
+            </button>
+        </div>
+        
+        <p class="counter" id="counter">No button clicks avoided: <span id="clickCount">0</span></p>
+        
+        <div class="acceptance-message" id="acceptanceMessage">
+            <div class="celebration">
+                <i class="fas fa-heart"></i> <i class="fas fa-star"></i> <i class="fas fa-heart"></i>
+            </div>
+            <h2>You've Made Me So Happy!</h2>
+            <p>Thank you for saying YES! You've just made this the best Valentine's Day ever! I promise to make it special and memorable for you. Get ready for a day filled with love, laughter, and wonderful moments together.</p>
+            <p>I'm so excited to celebrate our love! <i class="fas fa-heart heart-icon"></i></p>
+        </div>
+        
+        <div class="footer">
+            <p>Made with <i class="fas fa-heart" style="color:#ff4d7e"></i> for someone very special</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+            const acceptanceMessage = document.getElementById('acceptanceMessage');
+            const heartsContainer = document.getElementById('heartsContainer');
+            const clickCountElement = document.getElementById('clickCount');
+            
+            // Variables
+            let clickCount = 0;
+            let noBtnMovements = 0;
+            
+            // Create floating hearts background
+            function createHearts() {
+                for (let i = 0; i < 20; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.innerHTML = '<i class="fas fa-heart"></i>';
+                    
+                    // Random position and animation delay
+                    const leftPos = Math.random() * 100;
+                    const delay = Math.random() * 6;
+                    
+                    heart.style.left = `${leftPos}%`;
+                    heart.style.animationDelay = `${delay}s`;
+                    heart.style.fontSize = `${Math.random() * 20 + 15}px`;
+                    
+                    heartsContainer.appendChild(heart);
+                }
+            }
+            
+            // Move the "No" button to a random position
+            function moveNoButton() {
+                const container = document.querySelector('.container');
+                const containerRect = container.getBoundingClientRect();
+                const buttonRect = noBtn.getBoundingClientRect();
+                
+                // Calculate maximum positions within container
+                const maxX = containerRect.width - buttonRect.width - 40;
+                const maxY = containerRect.height - buttonRect.height - 100;
+                
+                // Generate random position within container bounds
+                const randomX = Math.max(20, Math.random() * maxX);
+                const randomY = Math.max(20, Math.random() * maxY);
+                
+                // Apply new position
+                noBtn.style.position = 'absolute';
+                noBtn.style.left = `${randomX}px`;
+                noBtn.style.top = `${randomY}px`;
+                
+                // Update counter
+                clickCount++;
+                clickCountElement.textContent = clickCount;
+                noBtnMovements++;
+                
+                // Make button smaller after several attempts
+                if (noBtnMovements > 5) {
+                    const currentSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
+                    noBtn.style.fontSize = `${currentSize * 0.9}px`;
+                }
+                
+                // Change button text occasionally
+                if (noBtnMovements % 3 === 0) {
+                    const messages = [
+                        "No, Sorry",
+                        "Are you sure?",
+                        "Maybe think again?",
+                        "Try clicking Yes!",
+                        "I'm shy!",
+                        "Click Yes instead!",
+                        "You missed me!"
+                    ];
+                    const randomIndex = Math.floor(Math.random() * messages.length);
+                    noBtn.innerHTML = `<i class="fas fa-times"></i> ${messages[randomIndex]}`;
+                }
+            }
+            
+            // Show acceptance message
+            function showAcceptance() {
+                // Hide buttons and counter
+                document.querySelector('.options').style.display = 'none';
+                document.querySelector('.counter').style.display = 'none';
+                
+                // Show acceptance message
+                acceptanceMessage.style.display = 'block';
+                
+                // Add more celebration hearts
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        createCelebrationHeart();
+                    }, i * 100);
+                }
+                
+                // Play a celebration sound (if allowed by browser)
+                playCelebrationSound();
+            }
+            
+            // Create celebration hearts
+            function createCelebrationHeart() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '<i class="fas fa-heart"></i>';
+                heart.style.color = getRandomColor();
+                
+                // Random position
+                const leftPos = Math.random() * 100;
+                heart.style.left = `${leftPos}%`;
+                heart.style.fontSize = `${Math.random() * 30 + 20}px`;
+                
+                // Add to container
+                document.querySelector('.container').appendChild(heart);
+                
+                // Remove after animation completes
+                setTimeout(() => {
+                    heart.remove();
+                }, 6000);
+            }
+            
+            // Get random color for hearts
+            function getRandomColor() {
+                const colors = ['#ff4d7e', '#ff6b8b', '#ff8e53', '#ffafbd', '#ffc3a0', '#ff6b6b'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+            
+            // Play celebration sound
+            function playCelebrationSound() {
+                // Create a simple beep sound using Web Audio API
+                try {
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+                    oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+                    oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+                    
+                    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                    
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.5);
+                } catch (e) {
+                    // Audio not supported or autoplay policy restrictions
+                    console.log("Audio playback not available");
+                }
+            }
+            
+            // Event listeners
+            noBtn.addEventListener('mouseover', moveNoButton);
+            noBtn.addEventListener('click', moveNoButton);
+            
+            yesBtn.addEventListener('click', showAcceptance);
+            
+            // Initialize the app
+            createHearts();
+        });
+    </script>
+</body>
+</html>
